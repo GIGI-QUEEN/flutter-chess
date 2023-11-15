@@ -7,6 +7,7 @@ class Lobby {
   final bool isPrivate;
   final String lobbyName;
   String? lobbyId;
+  String? lobbyKey;
   User? guest;
   final DataBaseService _dataBaseService = DataBaseService();
 

@@ -6,13 +6,13 @@ import 'package:uuid/uuid.dart';
 class User {
   final String username;
   String userUuid = const Uuid().v1();
-  String? userKey;
+  // String? userKey;
 
   final DataBaseService _dataBaseService = DataBaseService();
   User({required this.username});
 
   Future<void> createUser() async {
-    userKey = await _dataBaseService.addUserToDB(this);
+    await _dataBaseService.addUserToDB(this);
   }
 
   factory User.fromRTBD(Map<String, dynamic> data) {

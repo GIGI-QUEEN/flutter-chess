@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:client/components/app_bar.dart';
 import 'package:client/components/custom_text_field.dart';
 import 'package:client/models/lobby.dart';
@@ -28,8 +30,8 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 40, right: 40),
-            child: Consumer2<UserProvider, LobbyProvider>(
-              builder: (context, userModel, lobbyModel, child) {
+            child: Consumer<UserProvider>(
+              builder: (context, userModel, child) {
                 final lock = isPrivate
                     ? const Icon(Icons.lock)
                     : const Icon(Icons.lock_open);
@@ -62,11 +64,16 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
                               isPrivate: isPrivate,
                               lobbyName: _textEditingController.text);
                           await lobby.initializeLobby();
-                          lobbyModel.setLobby(lobby);
+                          //lobbyModel.setLobby(lobby);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LobbyView(),
+                                builder: (context) =>
+                                    ChangeNotifierProvider<LobbyProvider>(
+                                  create: (_) =>
+                                      LobbyProvider(currentLobby: lobby),
+                                  child: LobbyView(),
+                                ),
                               ));
                         },
                         child: const Text('Create lobby')),

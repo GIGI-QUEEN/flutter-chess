@@ -12,10 +12,10 @@ class LobbiesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<UserProvider, LobbiesProvider, LobbyProvider>(
-      builder: (context, userModel, lobbiesModel, lobbyModel, child) {
-        lobbiesModel.lobbies
-            .forEach((lobby) => {print('ID: ${lobby.lobbyId}')});
+    return Consumer2<UserProvider, LobbiesProvider>(
+      builder: (context, userModel, lobbiesModel, child) {
+        /*     lobbiesModel.lobbies
+            .forEach((lobby) => {print('ID: ${lobby.lobbyId}')}); */
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: CustomAppBar(title: userModel.user!.username),
@@ -38,14 +38,18 @@ class LobbiesView extends StatelessWidget {
                                   return Card(
                                     child: ListTile(
                                       onTap: () {
-                                        print(
-                                            'lobby ${lobby.lobbyName}, id: ${lobby.lobbyId}');
-                                        lobbyModel.setLobby(lobby);
+                                        // lobbyModel.setLobby(lobby);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LobbyView()));
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider<
+                                                      LobbyProvider>(
+                                                create: (_) => LobbyProvider(
+                                                    currentLobby: lobby),
+                                                child: LobbyView(),
+                                              ),
+                                            ));
                                       },
                                       leading: lock,
                                       title: Text(lobby.lobbyName),

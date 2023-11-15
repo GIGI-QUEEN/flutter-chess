@@ -2,7 +2,6 @@
 
 import 'package:client/components/custom_text_field.dart';
 import 'package:client/models/lobbies_provider.dart';
-import 'package:client/models/lobby_provider.dart';
 import 'package:client/models/user.dart';
 import 'package:client/models/user_provider.dart';
 import 'package:client/values/main_gradient_bg.dart';
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => LobbiesProvider()),
-        ChangeNotifierProvider(create: (context) => LobbyProvider()),
+        // ChangeNotifierProvider(create: (context) => LobbyProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

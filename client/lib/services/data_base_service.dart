@@ -10,25 +10,12 @@ class DataBaseService {
   static const USERS_PATH = 'users';
   static const LOBBIES_PATH = 'lobbies';
 
-/*   Future<void> addUserToDB(User user) async {
+  Future<void> addUserToDB(User user) async {
     final usersRef = database.child(USERS_PATH);
     try {
       await usersRef
-          .push()
+          .child(user.userUuid)
           .set({"username": user.username, "uuid": user.userUuid});
-    } catch (e) {
-      //print("ERROR IN addUser $e");
-      throw Exception(e);
-    }
-  } */
-
-  Future<String?> addUserToDB(User user) async {
-    final usersRef = database.child(USERS_PATH);
-    try {
-      final newRef = usersRef.push();
-      final userKey = newRef.key;
-      await newRef.set({"username": user.username, "uuid": user.userUuid});
-      return userKey; // Return the generated key
     } catch (e) {
       // Handle the error or throw an exception if needed
       throw Exception(e);
@@ -37,9 +24,8 @@ class DataBaseService {
 
   Future<void> addLobbyToDB(Lobby lobby) async {
     final lobbiesRef = database.child(LOBBIES_PATH);
-    print("IDDD: ${lobby.lobbyId}");
     try {
-      await lobbiesRef.push().set({
+      lobbiesRef.child(lobby.lobbyId!).set({
         'lobby_id': lobby.lobbyId,
         'is_private': lobby.isPrivate,
         'lobby_name': lobby.lobbyName,
@@ -48,8 +34,8 @@ class DataBaseService {
           "uuid": lobby.owner.userUuid,
         },
         'guest': {
-          "username": lobby.guest?.username ?? '',
-          "uuid": lobby.guest?.userUuid ?? '',
+          "username": null,
+          "uuid": null,
         }
       });
     } catch (e) {
@@ -59,19 +45,28 @@ class DataBaseService {
 
   Future<void> updateLobbyGuestInDB(Lobby lobby, User guest) async {
     final lobbiesRef = database.child(LOBBIES_PATH);
-    Query query = lobbiesRef.orderByChild('lobby_id').equalTo(lobby.lobbyId);
+    try {
+      await lobbiesRef.child("${lobby.lobbyId!}/guest").update({
+        'username': guest.username,
+        'uuid': guest.userUuid,
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
-    query.get().then((snapshot) {
-      if (snapshot.value != null) {
-        print("snapshot: ${snapshot.value}");
-      }
+  Future<void> deleteGuestFromLobby(Lobby lobby) async {
+    final guestRef = database.child("$LOBBIES_PATH/${lobby.lobbyId}/guest");
+    guestRef.update({
+      'username': null,
+      'uuid': null,
     });
   }
 
   Future<void> removeUserFromDB(User user) async {
     final usersRef = database.child(USERS_PATH);
     try {
-      await usersRef.child(user.userKey!).remove();
+      await usersRef.child(user.userUuid).remove();
     } catch (e) {
       throw Exception(e);
     }

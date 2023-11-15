@@ -13,17 +13,15 @@ class LobbyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LobbyProvider>(
       builder: (context, userModel, lobbyModel, child) {
-        DataBaseService _dataBaseService = DataBaseService();
+        DataBaseService dataBaseService = DataBaseService();
 
-        print('lobby ${lobbyModel.currentLobby!.lobbyName}');
         final bool isOwner =
-            lobbyModel.currentLobby!.owner.userUuid == userModel.user!.userUuid
+            lobbyModel.currentLobby.owner.userUuid == userModel.user!.userUuid
                 ? true
                 : false;
-
         return Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: CustomAppBar(title: lobbyModel.currentLobby!.lobbyName),
+          appBar: CustomAppBar(title: lobbyModel.currentLobby.lobbyName),
           body: Container(
             width: double.infinity,
             decoration: mainContainerDecoration,
@@ -33,15 +31,17 @@ class LobbyView extends StatelessWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () async {
-                        print('id: ${lobbyModel.currentLobby!.lobbyId}');
                         try {
-                          _dataBaseService.updateLobbyGuestInDB(
-                              lobbyModel.currentLobby!, userModel.user!);
+                          dataBaseService.updateLobbyGuestInDB(
+                              lobbyModel.currentLobby, userModel.user!);
                         } catch (e) {
                           throw Exception(e);
                         }
                       },
-                      child: const Text('join'))
+                      child: const Text('join')),
+                  ElevatedButton(
+                      onPressed: isOwner && lobbyModel.hasJoined ? () {} : null,
+                      child: const Text('start game'))
                 ],
               ),
             ),
