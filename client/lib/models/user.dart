@@ -6,7 +6,6 @@ import 'package:uuid/uuid.dart';
 class User {
   final String username;
   String userUuid = const Uuid().v1();
-  // String? userKey;
 
   final DataBaseService _dataBaseService = DataBaseService();
   User({required this.username});

@@ -6,8 +6,7 @@ class Lobby {
   final User owner;
   final bool isPrivate;
   final String lobbyName;
-  String? lobbyId;
-  String? lobbyKey;
+  String lobbyId = '';
   User? guest;
   final DataBaseService _dataBaseService = DataBaseService();
 
@@ -16,7 +15,7 @@ class Lobby {
       required this.isPrivate,
       required this.lobbyName,
       this.guest,
-      this.lobbyId});
+      required this.lobbyId});
 
   Future<void> initializeLobby() async {
     lobbyId = const Uuid().v1();

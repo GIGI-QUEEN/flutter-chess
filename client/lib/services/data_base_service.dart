@@ -17,7 +17,6 @@ class DataBaseService {
           .child(user.userUuid)
           .set({"username": user.username, "uuid": user.userUuid});
     } catch (e) {
-      // Handle the error or throw an exception if needed
       throw Exception(e);
     }
   }
@@ -25,7 +24,7 @@ class DataBaseService {
   Future<void> addLobbyToDB(Lobby lobby) async {
     final lobbiesRef = database.child(LOBBIES_PATH);
     try {
-      lobbiesRef.child(lobby.lobbyId!).set({
+      lobbiesRef.child(lobby.lobbyId).set({
         'lobby_id': lobby.lobbyId,
         'is_private': lobby.isPrivate,
         'lobby_name': lobby.lobbyName,
@@ -46,7 +45,7 @@ class DataBaseService {
   Future<void> updateLobbyGuestInDB(Lobby lobby, User guest) async {
     final lobbiesRef = database.child(LOBBIES_PATH);
     try {
-      await lobbiesRef.child("${lobby.lobbyId!}/guest").update({
+      await lobbiesRef.child("${lobby.lobbyId}/guest").update({
         'username': guest.username,
         'uuid': guest.userUuid,
       });

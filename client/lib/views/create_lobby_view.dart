@@ -60,9 +60,11 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
                     ElevatedButton(
                         onPressed: () async {
                           final Lobby lobby = Lobby(
-                              owner: userModel.user!,
-                              isPrivate: isPrivate,
-                              lobbyName: _textEditingController.text);
+                            owner: userModel.user!,
+                            isPrivate: isPrivate,
+                            lobbyName: _textEditingController.text,
+                            lobbyId: '',
+                          );
                           await lobby.initializeLobby();
                           //lobbyModel.setLobby(lobby);
                           Navigator.push(

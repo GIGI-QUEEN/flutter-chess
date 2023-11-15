@@ -1,8 +1,7 @@
-import 'package:client/components/app_bar.dart';
 import 'package:client/models/lobby_provider.dart';
 import 'package:client/models/user_provider.dart';
-import 'package:client/services/data_base_service.dart';
-import 'package:client/values/main_gradient_bg.dart';
+import 'package:client/views/lobby_guest_view.dart';
+import 'package:client/views/lobby_owner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,40 +12,20 @@ class LobbyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LobbyProvider>(
       builder: (context, userModel, lobbyModel, child) {
-        DataBaseService dataBaseService = DataBaseService();
-
         final bool isOwner =
             lobbyModel.currentLobby.owner.userUuid == userModel.user!.userUuid
                 ? true
                 : false;
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: CustomAppBar(title: lobbyModel.currentLobby.lobbyName),
-          body: Container(
-            width: double.infinity,
-            decoration: mainContainerDecoration,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
-              child: Column(
-                children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          dataBaseService.updateLobbyGuestInDB(
-                              lobbyModel.currentLobby, userModel.user!);
-                        } catch (e) {
-                          throw Exception(e);
-                        }
-                      },
-                      child: const Text('join')),
-                  ElevatedButton(
-                      onPressed: isOwner && lobbyModel.hasJoined ? () {} : null,
-                      child: const Text('start game'))
-                ],
-              ),
-            ),
-          ),
-        );
+        return isOwner
+            ? LobbyOwnerView(
+                lobby: lobbyModel.currentLobby,
+                user: userModel.user!,
+                hasJoined: lobbyModel.hasJoined,
+              )
+            : LobbyGuestView(
+                currentLobby: lobbyModel.currentLobby,
+                user: userModel.user!,
+              );
       },
     );
   }
