@@ -70,4 +70,79 @@ class DataBaseService {
       throw Exception(e);
     }
   }
+
+  Future<List<User>> getAllUsers() async {
+    final usersRef = database.child(USERS_PATH);
+    List<User> users = [];
+    try {
+      await usersRef.get().then((value) {
+        final usersMap = Map<String, dynamic>.from(value.value as dynamic);
+        for (var element in usersMap.entries) {
+          final User user =
+              User.fromRTBD(Map<String, dynamic>.from(element.value));
+          users.add(user);
+        }
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+    return users;
+  }
+
+  Future<List<User>> findUsers(String username) async {
+    final usersRef = database.child(USERS_PATH);
+    List<User> foundUsers = [];
+
+    try {
+      final snapshot = await usersRef
+          .orderByChild('username')
+          .startAt(username.toLowerCase())
+          .endAt("${username.toLowerCase()}\uf8ff")
+          .get();
+
+      if (username.length >= 2 && snapshot.value != null) {
+        Map<dynamic, dynamic> users = snapshot.value as dynamic;
+        users.forEach((key, userData) {
+          final user = User.fromRTBD(Map<String, dynamic>.from(userData));
+          foundUsers.add(user);
+        });
+      } else {
+        foundUsers = [];
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+
+    return foundUsers;
+  }
+
+/*   Future<List<User>> findUsers(String username) async {
+    //User user;
+    final usersRef = database.child(USERS_PATH);
+    List<User> foundUsers = [];
+    try {
+      final snapshot = await usersRef
+          .orderByChild('username')
+          .startAt(username.toLowerCase())
+          .endAt(username.toLowerCase() + "\uf8ff")
+          .get();
+      //  print("snapshot: ${snapshot.value}");
+      // final snapshot = await usersRef.get();
+      if (snapshot.value != null) {
+        print('val: ${snapshot.value}');
+        Map<dynamic, dynamic> users = snapshot.value as dynamic;
+        users.forEach((key, userData) {
+          if (userData['username'].toString().toLowerCase() ==
+              username.toLowerCase()) {
+            final user = User.fromRTBD(Map<String, dynamic>.from(userData));
+            print("WE FOUND HIM! ${user.username}");
+            foundUsers.add(user);
+          }
+        });
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+    return foundUsers;
+  } */
 }

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      required this.textEditingController,
-      required this.hintText,
-      this.suffixIcon});
-  final TextEditingController textEditingController;
+  const CustomTextField({
+    super.key,
+    this.textEditingController,
+    required this.hintText,
+    this.suffixIcon,
+    this.onChanged,
+  });
+  final TextEditingController? textEditingController;
   final String hintText;
   final Widget? suffixIcon;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: textEditingController,
+      onChanged: onChanged,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         hintText: hintText,

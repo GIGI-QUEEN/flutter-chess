@@ -1,3 +1,4 @@
+import 'package:client/helperes/helpers.dart';
 import 'package:client/models/lobby_provider.dart';
 import 'package:client/models/user_provider.dart';
 import 'package:client/views/lobby_guest_view.dart';
@@ -12,10 +13,8 @@ class LobbyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LobbyProvider>(
       builder: (context, userModel, lobbyModel, child) {
-        final bool isOwner =
-            lobbyModel.currentLobby.owner.userUuid == userModel.user!.userUuid
-                ? true
-                : false;
+        final isOwner = isUserOwner(lobbyModel.currentLobby, userModel.user!);
+
         return isOwner
             ? LobbyOwnerView(
                 lobby: lobbyModel.currentLobby,

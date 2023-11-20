@@ -75,9 +75,23 @@ class _MainMenuViewState extends State<MainMenuView> {
             icon: Icon(Icons.add),
             label: 'new game',
           ),
-          NavigationDestination(
+          /* NavigationDestination(
             selectedIcon: Icon(Icons.sports_esports),
             icon: Icon(Icons.sports_esports_outlined),
+            label: 'invites',
+          ), */
+          NavigationDestination(
+            selectedIcon: Icon(Icons.sports_esports),
+            icon: Stack(children: <Widget>[
+              Icon(Icons.sports_esports),
+              Positioned(
+                // draw a red marble
+                top: 0.0,
+                right: 0.0,
+                child: Icon(Icons.brightness_1,
+                    size: 8.0, color: Colors.redAccent),
+              )
+            ]),
             label: 'invites',
           ),
         ],
@@ -85,9 +99,6 @@ class _MainMenuViewState extends State<MainMenuView> {
     );
   }
 }
-
-
-
 
 /* class _MainMenuViewState extends State<MainMenuView> {
   int _currentIndex = 0;
