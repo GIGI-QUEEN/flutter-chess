@@ -46,6 +46,11 @@ class LobbyProvider extends ChangeNotifier {
 
   void completeSearch(String text) async {
     _availableUsers = await _dataBaseService.findUsers(text);
+    notifyListeners();
+  }
+
+  void updateLobbyGuest(User guest) async {
+    await _dataBaseService.updateLobbyGuestInDB(currentLobby, guest);
   }
 
   @override

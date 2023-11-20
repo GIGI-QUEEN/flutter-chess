@@ -15,16 +15,7 @@ class LobbyView extends StatelessWidget {
       builder: (context, userModel, lobbyModel, child) {
         final isOwner = isUserOwner(lobbyModel.currentLobby, userModel.user!);
 
-        return isOwner
-            ? LobbyOwnerView(
-                lobby: lobbyModel.currentLobby,
-                user: userModel.user!,
-                hasJoined: lobbyModel.hasJoined,
-              )
-            : LobbyGuestView(
-                currentLobby: lobbyModel.currentLobby,
-                user: userModel.user!,
-              );
+        return isOwner ? const LobbyOwnerView() : LobbyGuestView();
       },
     );
   }
