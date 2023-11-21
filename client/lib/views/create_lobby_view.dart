@@ -33,20 +33,31 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
             child: Consumer<UserProvider>(
               builder: (context, userModel, child) {
                 final lock = isPrivate
-                    ? const Icon(Icons.lock)
-                    : const Icon(Icons.lock_open);
+                    ? const Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      )
+                    : const Icon(
+                        Icons.lock_open,
+                        color: Colors.black,
+                      );
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomTextField(
                       textEditingController: _textEditingController,
                       hintText: 'Enter lobby name',
-                      suffixIcon: lock,
+                      /*  suffixIcon: lock, */
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Switch(
+                    SwitchListTile(
+                        title: Text(
+                          isPrivate ? "Private" : "Public",
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        secondary: lock,
                         value: isPrivate,
                         onChanged: (bool value) {
                           setState(() {
@@ -56,7 +67,6 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    //ToggleButtons(children: children, isSelected: isSelected),
                     ElevatedButton(
                         onPressed: () async {
                           final Lobby lobby = Lobby(
@@ -74,7 +84,7 @@ class _CreateLobbyViewState extends State<CreateLobbyView> {
                                     ChangeNotifierProvider<LobbyProvider>(
                                   create: (_) =>
                                       LobbyProvider(currentLobby: lobby),
-                                  child: LobbyView(),
+                                  child: const LobbyView(),
                                 ),
                               ));
                         },
