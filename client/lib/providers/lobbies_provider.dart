@@ -17,7 +17,7 @@ class LobbiesProvider extends ChangeNotifier {
   List<Lobby> get lobbies => _lobbies;
 
   LobbiesProvider() {
-    print("LOBBIES INIT");
+    //print("LOBBIES INIT");
     _listenToLobbies();
   }
 

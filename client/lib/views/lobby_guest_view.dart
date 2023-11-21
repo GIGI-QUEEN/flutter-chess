@@ -1,7 +1,7 @@
 import 'package:client/components/app_bar.dart';
 import 'package:client/components/main_scaffold.dart';
-import 'package:client/models/lobby_provider.dart';
-import 'package:client/models/user_provider.dart';
+import 'package:client/providers/lobby_provider.dart';
+import 'package:client/providers/user_provider.dart';
 import 'package:client/services/data_base_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

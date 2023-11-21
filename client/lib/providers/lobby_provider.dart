@@ -11,17 +11,11 @@ class LobbyProvider extends ChangeNotifier {
   bool hasJoined = false;
   List<User> _availableUsers = [];
   List<User> get availableUsers => _availableUsers;
-  // Lobby? get currentLobby => _currentLobby;
 
   final DataBaseService _dataBaseService = DataBaseService();
   final _database = FirebaseDatabase.instance.ref();
 
   late StreamSubscription _lobbyStreamSubscription;
-
-/*   void setLobby(Lobby lobby) {
-    _currentLobby = lobby;
-    notifyListeners();
-  } */
 
   LobbyProvider({required this.currentLobby}) {
     _listenToLobbyChanges();

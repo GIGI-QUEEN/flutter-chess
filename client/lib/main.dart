@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:client/components/custom_text_field.dart';
-import 'package:client/models/lobbies_provider.dart';
+import 'package:client/providers/lobbies_provider.dart';
 import 'package:client/models/user.dart';
-import 'package:client/models/user_provider.dart';
+import 'package:client/providers/user_provider.dart';
 import 'package:client/values/main_gradient_bg.dart';
 import 'package:client/views/main_menu_view.dart';
 import 'package:firebase_database/firebase_database.dart';

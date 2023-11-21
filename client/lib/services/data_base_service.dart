@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:client/models/database_invite.dart';
 import 'package:client/models/lobby.dart';
 import 'package:client/models/user.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -116,33 +117,20 @@ class DataBaseService {
     return foundUsers;
   }
 
-/*   Future<List<User>> findUsers(String username) async {
-    //User user;
+  Future<void> addInviteToDB(
+      User invitedUser, User owner, Lobby lobby, DatabaseInvite invite) async {
     final usersRef = database.child(USERS_PATH);
-    List<User> foundUsers = [];
+
     try {
-      final snapshot = await usersRef
-          .orderByChild('username')
-          .startAt(username.toLowerCase())
-          .endAt(username.toLowerCase() + "\uf8ff")
-          .get();
-      //  print("snapshot: ${snapshot.value}");
-      // final snapshot = await usersRef.get();
-      if (snapshot.value != null) {
-        print('val: ${snapshot.value}');
-        Map<dynamic, dynamic> users = snapshot.value as dynamic;
-        users.forEach((key, userData) {
-          if (userData['username'].toString().toLowerCase() ==
-              username.toLowerCase()) {
-            final user = User.fromRTBD(Map<String, dynamic>.from(userData));
-            print("WE FOUND HIM! ${user.username}");
-            foundUsers.add(user);
-          }
-        });
-      }
+      await usersRef
+          .child("${invitedUser.userUuid}/invites/${invite.inviteId}")
+          .set({
+        "lobby_name": lobby.lobbyName,
+        "lobby_id": lobby.lobbyId,
+        "lobby_owner_name": owner.username,
+      });
     } catch (e) {
       throw Exception(e);
     }
-    return foundUsers;
-  } */
+  }
 }

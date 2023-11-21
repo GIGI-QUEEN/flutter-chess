@@ -1,8 +1,10 @@
 import 'package:client/components/app_bar.dart';
 import 'package:client/components/custom_text_field.dart';
 import 'package:client/components/main_scaffold.dart';
-import 'package:client/models/lobby_provider.dart';
-import 'package:client/models/user_provider.dart';
+import 'package:client/models/database_invite.dart';
+import 'package:client/providers/lobby_provider.dart';
+import 'package:client/providers/user_provider.dart';
+import 'package:client/services/data_base_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +17,7 @@ class LobbyOwnerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LobbyProvider>(
       builder: (context, userModel, lobbyModel, child) {
+        DataBaseService _dataBaseService = DataBaseService();
         return MainScaffold(
           mainContainerWidh: double.infinity,
           appBar: CustomAppBar(title: '${userModel.user!.username} (owner)'),
@@ -37,7 +40,16 @@ class LobbyOwnerView extends StatelessWidget {
                     return ListTile(
                       title: Text(lobbyModel.availableUsers[index].username),
                       trailing: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final DatabaseInvite invite = DatabaseInvite(
+                              invitedUser: lobbyModel.availableUsers[index]);
+                          print("MY INVITE ${invite.inviteId}");
+                          await _dataBaseService.addInviteToDB(
+                              lobbyModel.availableUsers[index],
+                              userModel.user!,
+                              lobbyModel.currentLobby,
+                              invite);
+                        },
                         child: const Text('invite'),
                       ),
                     );

@@ -1,7 +1,7 @@
 import 'package:client/components/app_bar.dart';
-import 'package:client/models/lobbies_provider.dart';
-import 'package:client/models/lobby_provider.dart';
-import 'package:client/models/user_provider.dart';
+import 'package:client/providers/lobbies_provider.dart';
+import 'package:client/providers/lobby_provider.dart';
+import 'package:client/providers/user_provider.dart';
 import 'package:client/values/main_gradient_bg.dart';
 import 'package:client/views/lobby_view.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class LobbiesView extends StatelessWidget {
                                                       LobbyProvider>(
                                                 create: (_) => LobbyProvider(
                                                     currentLobby: lobby),
-                                                child: LobbyView(),
+                                                child: const LobbyView(),
                                               ),
                                             ));
                                       },
