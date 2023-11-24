@@ -138,13 +138,17 @@ class LobbyProvider extends ChangeNotifier {
     await _dataBaseService.updateLobbyGuestInDB(currentLobby, guest);
   }
 
+  void unjoin() {
+    _dataBaseService.deleteGuestFromLobby(currentLobby);
+  }
+
   @override
   void dispose() {
     _lobbyStreamSubscription.cancel();
     _gameStartSubscription.cancel();
     _gameSubscription.cancel();
-    _dataBaseService.deleteGuestFromLobby(
-        currentLobby); // remove guest from lobby when he leaves the screen
+    /*  _dataBaseService.deleteGuestFromLobby(
+        currentLobby); */ // remove guest from lobby when he leaves the screen
     hasJoined = false;
     super.dispose();
   }

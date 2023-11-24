@@ -7,7 +7,12 @@ import 'package:provider/provider.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
-  CustomAppBar({super.key, required this.title, this.actions});
+  final bool? automaticallyImplyLeading;
+  CustomAppBar(
+      {super.key,
+      required this.title,
+      this.actions,
+      this.automaticallyImplyLeading});
 
   @override
   Size get preferredSize => const Size.fromHeight(50);
@@ -18,6 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
       builder: (context, userModel, child) => AppBar(
+        automaticallyImplyLeading: automaticallyImplyLeading ?? true,
         iconTheme: const IconThemeData(
           color: Colors.white, //change your color here
         ),
