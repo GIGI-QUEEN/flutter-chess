@@ -22,7 +22,7 @@ class LobbyGuestView extends StatelessWidget {
         return MainScaffold(
           mainContainerWidh: double.infinity,
           appBar: CustomAppBar(
-            title: '${userModel.user!.username} (guest)',
+            title: lobby.lobbyName,
             automaticallyImplyLeading: !isGuestMe,
           ),
           child: Padding(

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:client/services/data_base_service.dart';
-import 'package:flutter_chess_board/flutter_chess_board.dart';
 import 'package:uuid/uuid.dart';
 
 class User {

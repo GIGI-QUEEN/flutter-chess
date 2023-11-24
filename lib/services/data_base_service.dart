@@ -5,7 +5,6 @@ import 'package:client/models/game.dart';
 import 'package:client/models/lobby.dart';
 import 'package:client/models/user.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_chess_board/flutter_chess_board.dart';
 
 class DataBaseService {
   final DatabaseReference database = FirebaseDatabase.instance.ref();

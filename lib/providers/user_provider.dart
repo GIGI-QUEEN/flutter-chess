@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:client/models/invite.dart';
 import 'package:client/models/user.dart';
-import 'package:client/services/data_base_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 

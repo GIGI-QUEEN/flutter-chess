@@ -5,7 +5,6 @@ import 'package:client/providers/lobbies_provider.dart';
 import 'package:client/models/user.dart';
 import 'package:client/providers/user_provider.dart';
 import 'package:client/values/main_gradient_bg.dart';
-import 'package:client/views/game_view.dart';
 import 'package:client/views/main_menu_view.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';

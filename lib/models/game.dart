@@ -1,5 +1,4 @@
 import 'package:client/models/user.dart';
-import 'package:flutter_chess_board/flutter_chess_board.dart';
 
 class Game {
   Map<String, User> players;
