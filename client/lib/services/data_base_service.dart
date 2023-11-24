@@ -1,15 +1,18 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:client/models/database_invite.dart';
+import 'package:client/models/game.dart';
 import 'package:client/models/lobby.dart';
 import 'package:client/models/user.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_chess_board/flutter_chess_board.dart';
 
 class DataBaseService {
   final DatabaseReference database = FirebaseDatabase.instance.ref();
 
   static const USERS_PATH = 'users';
   static const LOBBIES_PATH = 'lobbies';
+  static const GAMES_PATH = 'games';
 
   Future<void> addUserToDB(User user) async {
     final usersRef = database.child(USERS_PATH);
@@ -129,6 +132,55 @@ class DataBaseService {
         "lobby_id": lobby.lobbyId,
         "lobby_owner_name": owner.username,
       });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> addGameToDB(Lobby lobby, Game game) async {
+    final gamesRef = database.child(LOBBIES_PATH);
+    // game.players.
+    final player1 = game.players['player1'];
+    final player2 = game.players['player2'];
+
+    try {
+      await gamesRef.child('${lobby.lobbyId}/game').set({
+        "status": 'in_progress',
+        "board_state": {
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "current_move": 'white',
+        },
+        "players": {
+          "player1": {
+            "username": player1?.username,
+            "uuid": player1?.userUuid,
+            "color": player1?.color == 'white' ? 'white' : 'black',
+          },
+          "player2": {
+            "username": player2?.username,
+            "uuid": player2?.userUuid,
+            "color": player2?.color == 'white' ? 'white' : 'black',
+          }
+        },
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> addMoveToDB(Lobby lobby, String fen, String currentMove) async {
+    /* final lobbiesRef =  */
+    try {
+      await database
+          .child('$LOBBIES_PATH/${lobby.lobbyId}/game/board_state')
+          .update({
+        "fen": fen,
+        "current_move": currentMove,
+      });
+
+      /*  await database.child("$LOBBIES_PATH/${lobby.lobbyId}/game/").update({
+        "current_move": currentMove,
+      }); */
     } catch (e) {
       throw Exception(e);
     }

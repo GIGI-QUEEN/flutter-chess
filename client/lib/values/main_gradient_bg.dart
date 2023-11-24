@@ -15,6 +15,6 @@ const BoxDecoration mainContainerDecoration = BoxDecoration(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-      Color(0Xff544a7d),
+      Color.fromRGBO(84, 74, 125, 1),
       Color(0Xffffd452),
     ]));

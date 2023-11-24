@@ -1,6 +1,7 @@
 import 'package:client/helperes/helpers.dart';
 import 'package:client/providers/lobby_provider.dart';
 import 'package:client/providers/user_provider.dart';
+import 'package:client/views/game_view.dart';
 import 'package:client/views/lobby_guest_view.dart';
 import 'package:client/views/lobby_owner_view.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,15 @@ class LobbyView extends StatelessWidget {
       builder: (context, userModel, lobbyModel, child) {
         final isOwner = isUserOwner(lobbyModel.currentLobby, userModel.user!);
 
-        return isOwner ? const LobbyOwnerView() : LobbyGuestView();
+        final isStarted = lobbyModel.currentLobby.game?.status == "in_progress"
+            ? true
+            : false;
+
+        return isStarted
+            ? const GameView()
+            : isOwner
+                ? const LobbyOwnerView()
+                : LobbyGuestView();
       },
     );
   }
