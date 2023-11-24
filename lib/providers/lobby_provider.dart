@@ -2,13 +2,10 @@
 
 import 'dart:async';
 
-import 'package:client/helperes/helpers.dart';
 import 'package:client/models/game.dart';
 import 'package:client/models/lobby.dart';
 import 'package:client/models/user.dart';
 import 'package:client/services/data_base_service.dart';
-import 'package:client/views/game_view.dart';
-import 'package:client/views/lobby_view.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chess_board/flutter_chess_board.dart';
@@ -78,6 +75,7 @@ class LobbyProvider extends ChangeNotifier {
               Game.fromRTDB(Map<String, dynamic>.from(value.value as dynamic));
 
           currentLobby.game = game;
+
           notifyListeners();
         });
       }
@@ -94,12 +92,10 @@ class LobbyProvider extends ChangeNotifier {
         final fenJSON =
             Map<String, dynamic>.from(event.snapshot.value as dynamic);
         fen = fenJSON['fen'];
-        currentMove = fenJSON['current_move'];
+        // currentMove = fenJSON['current_move'];
         // print("CURRENT MOVE: $currentMove");
         // chess.turn = currentMove == 'white' ? Color.WHITE : Color.BLACK;
         chess.load(fen);
-
-        print("FEN in provider: $fen");
 
         notifyListeners();
         //print("FENJSON $fenJSON");
@@ -107,20 +103,7 @@ class LobbyProvider extends ChangeNotifier {
     });
   }
 
-/*   void _listenToCurrentMove() {
-    _currentMoveSubscription = _database
-        .child("lobbies/${currentLobby.lobbyId}/game/current_move")
-        .onValue
-        .listen((event) {
-      if (event.snapshot.value != null) {
-        currentLobby.game?.currentMove = event.snapshot.value as String;
-      }
-    });
-  } */
-
   void tryMakingMove({required ShortMove move}) {
-    // print("before move: ${chess.turn.name}");
-    print("FEN BEFORE MOVE ${chess.fen}");
     final success = chess.move(<String, String?>{
       'from': move.from,
       'to': move.to,
@@ -129,9 +112,7 @@ class LobbyProvider extends ChangeNotifier {
         () => null,
       ),
     });
-    print("FEN AFTER MOVE ${chess.fen}");
 
-    // print("after move: ${chess.turn.name}");
     notifyListeners();
     if (success) {
       final nextMove = chess.turn == Color.BLACK ? 'black' : 'white';

@@ -13,6 +13,7 @@ class Game {
     Map<String, User> players = {};
 
     data['players'].forEach((key, value) {
+      print("key $key, value: ${value['color']}");
       players[key] = User.fromRTBD({
         'username': value['username'],
         'color': value['color'],

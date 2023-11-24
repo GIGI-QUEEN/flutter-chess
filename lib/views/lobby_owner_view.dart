@@ -9,7 +9,6 @@ import 'package:client/providers/lobby_provider.dart';
 import 'package:client/providers/user_provider.dart';
 import 'package:client/services/data_base_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chess_board/flutter_chess_board.dart';
 import 'package:provider/provider.dart';
 
 class LobbyOwnerView extends StatelessWidget {
@@ -44,11 +43,15 @@ class LobbyOwnerView extends StatelessWidget {
                             };
                             print("p1 color:${player1.color}");
                             print("p2 color: ${player2.color}");
+
+                            /* print("p1 color after:${player1.color}");
+                            print("p2 color after: ${player2.color}"); */
                             // print("guest: ${lobbyModel.currentLobby.guest!}");
                             final newGame = Game(
-                                players: players,
-                                status: "in_progress",
-                                currentMove: 'white');
+                              players: players,
+                              status: "in_progress",
+                              currentMove: 'white',
+                            );
                             // newGame.isStarted = true;
                             // lobbyModel.currentLobby.game = newGame;
                             await lobbyModel.currentLobby

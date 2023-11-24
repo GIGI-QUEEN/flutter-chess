@@ -12,12 +12,12 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //ChessBoardController controller = ChessBoardController();
-
     return Consumer2<UserProvider, LobbyProvider>(
       builder: (context, userModel, lobbyModel, child) {
-        final myColor = userModel.user?.color == "white" ? 'white' : 'black';
+        final me = lobbyModel.currentLobby.game?.players.values
+            .firstWhere((user) => user.userUuid == userModel.user?.userUuid);
 
+        final myColor = me?.color;
         return Scaffold(
           appBar: AppBar(
             title: const Text('Chess game'),
