@@ -18,31 +18,83 @@ class GameView extends StatelessWidget {
       builder: (context, userModel, lobbyModel, child) {
         final me = lobbyModel.currentLobby.game?.players.values
             .firstWhere((user) => user.userUuid == userModel.user?.userUuid);
+        final opponent = lobbyModel.currentLobby.game?.players.values
+            .firstWhere((user) => user.userUuid != userModel.user?.userUuid);
 
         final myColor = me?.color;
+
+        final currentTurn = lobbyModel.currentLobby.game?.players.values
+            .firstWhere((user) =>
+                user.color == lobbyModel.chess.turn.name.toLowerCase())
+            .username;
         return MainScaffold(
           appBar: CustomAppBar(title: 'chess game'),
           child: Container(
-            decoration: mainContainerDecoration,
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Center(
-              child: SimpleChessBoard(
-                fen: lobbyModel.fen,
-                orientation:
-                    myColor == 'white' ? BoardColor.white : BoardColor.black,
-                whitePlayerType:
-                    myColor == 'white' ? PlayerType.human : PlayerType.computer,
-                blackPlayerType:
-                    myColor == 'black' ? PlayerType.human : PlayerType.computer,
-                showCoordinatesZone: false,
-                onMove: lobbyModel.tryMakingMove,
-                onPromote: () async {},
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(lobbyModel.getCurrentTurn(me!)),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    SimpleChessBoard(
+                      fen: lobbyModel.fen,
+                      orientation: myColor == 'white'
+                          ? BoardColor.white
+                          : BoardColor.black,
+                      whitePlayerType: myColor == 'white'
+                          ? PlayerType.human
+                          : PlayerType.computer,
+                      blackPlayerType: myColor == 'black'
+                          ? PlayerType.human
+                          : PlayerType.computer,
+                      showCoordinatesZone: false,
+                      onMove: lobbyModel.tryMakingMove,
+                      onPromote: () async {},
+                    ),
+                    GameResultPanel(
+                      isCheckmate: lobbyModel.isCheckmate,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );
       },
     );
+  }
+}
+
+class GameResultPanel extends StatelessWidget {
+  const GameResultPanel({super.key, required this.isCheckmate});
+  final bool isCheckmate;
+  //TODO:
+  //1: show winner
+  //2: add quit button
+  //3: delete lobby after quit button is hit
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+        visible: isCheckmate,
+        child: Container(
+          width: 300,
+          height: 300,
+          color: Colors.red,
+        ));
   }
 }
 

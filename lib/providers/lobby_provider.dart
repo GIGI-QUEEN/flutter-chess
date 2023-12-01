@@ -21,9 +21,12 @@ class LobbyProvider extends ChangeNotifier {
   final DataBaseService _dataBaseService = DataBaseService();
   final _database = FirebaseDatabase.instance.ref();
   final chess = chesslib.Chess.fromFEN(chesslib.Chess.DEFAULT_POSITION);
+  String currentTurn = '';
   String fen = ''; //'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  bool isCheck = false;
+  bool isCheckmate = false;
   ShortMove? lastMove;
-  String currentMove = 'white';
+  //String currentMove = 'white';
 
   late StreamSubscription _lobbyStreamSubscription;
   late StreamSubscription _gameStartSubscription;
@@ -95,7 +98,18 @@ class LobbyProvider extends ChangeNotifier {
         // currentMove = fenJSON['current_move'];
         // print("CURRENT MOVE: $currentMove");
         // chess.turn = currentMove == 'white' ? Color.WHITE : Color.BLACK;
+
         chess.load(fen);
+        if (chess.in_check) {
+          isCheck = true;
+          print("check!");
+        } else {
+          isCheck = false;
+        }
+        if (chess.in_checkmate) {
+          isCheckmate = true;
+          print("checkmate!");
+        }
 
         notifyListeners();
         //print("FENJSON $fenJSON");
@@ -140,6 +154,13 @@ class LobbyProvider extends ChangeNotifier {
 
   void unjoin() {
     _dataBaseService.deleteGuestFromLobby(currentLobby);
+  }
+
+  String getCurrentTurn(User me) {
+    final currentTurn = currentLobby.game?.players.values
+        .firstWhere((user) => user.color == chess.turn.name.toLowerCase())
+        .username;
+    return "Current turn: $currentTurn ${currentTurn == me.username ? "(you)" : ""}";
   }
 
   @override
