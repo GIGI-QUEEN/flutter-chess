@@ -1,9 +1,8 @@
 import 'package:client/components/app_bar.dart';
+import 'package:client/components/lobby_card.dart';
 import 'package:client/providers/lobbies_provider.dart';
-import 'package:client/providers/lobby_provider.dart';
 import 'package:client/providers/user_provider.dart';
 import 'package:client/values/main_gradient_bg.dart';
-import 'package:client/views/lobby_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +13,9 @@ class LobbiesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LobbiesProvider>(
       builder: (context, userModel, lobbiesModel, child) {
-        /*     lobbiesModel.lobbies
-            .forEach((lobby) => {print('ID: ${lobby.lobbyId}')}); */
+        final list =
+            lobbiesModel.lobbies.where((lobby) => lobby.game?.status == null);
+
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: CustomAppBar(title: userModel.user!.username),
@@ -31,31 +31,13 @@ class LobbiesView extends StatelessWidget {
                           ? ListView(
                               padding: const EdgeInsets.all(0),
                               children: [
-                                ...lobbiesModel.lobbies.map((lobby) {
-                                  final lock = lobby.isPrivate
-                                      ? const Icon(Icons.lock)
-                                      : const Icon(Icons.lock_open);
-                                  return Card(
-                                    child: ListTile(
-                                      onTap: () {
-                                        // lobbyModel.setLobby(lobby);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChangeNotifierProvider<
-                                                      LobbyProvider>(
-                                                create: (_) => LobbyProvider(
-                                                    currentLobby: lobby),
-                                                child: const LobbyView(),
-                                              ),
-                                            ));
-                                      },
-                                      leading: lock,
-                                      title: Text(lobby.lobbyName),
-                                      subtitle: Text(lobby.owner.username),
-                                    ),
-                                  );
+                                ...list.map((lobby) {
+                                  final isInvited =
+                                      userModel.isUserInvitedToLobby(lobby);
+                                  return LobbyCard(
+                                      lobby: lobby,
+                                      isInvited: isInvited,
+                                      user: userModel.user!);
                                 })
                               ],
                             )

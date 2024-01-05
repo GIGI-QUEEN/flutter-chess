@@ -136,6 +136,24 @@ class DataBaseService {
     }
   }
 
+  Future<void> removeInviteFromDB(User currentUser, Lobby lobby) async {
+    final usersRef = database.child(USERS_PATH);
+    try {
+      final data = await usersRef
+          .child("${currentUser.userUuid}/invites/")
+          .orderByChild('lobby_id')
+          .equalTo(lobby.lobbyId)
+          .get();
+      Map<dynamic, dynamic> inviteQueryData = data.value as dynamic;
+      final inviteId = inviteQueryData.keys.first;
+      await usersRef
+          .child("${currentUser.userUuid}/invites/$inviteId")
+          .remove();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   Future<void> addGameToDB(Lobby lobby, Game game) async {
     final gamesRef = database.child(LOBBIES_PATH);
     // game.players.
@@ -180,6 +198,14 @@ class DataBaseService {
       /*  await database.child("$LOBBIES_PATH/${lobby.lobbyId}/game/").update({
         "current_move": currentMove,
       }); */
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> removeLobbyFromDB(Lobby lobby) async {
+    try {
+      await database.child("$LOBBIES_PATH/${lobby.lobbyId}").remove();
     } catch (e) {
       throw Exception(e);
     }

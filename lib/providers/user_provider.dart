@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:client/models/invite.dart';
+import 'package:client/models/lobby.dart';
 import 'package:client/models/user.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,16 @@ class UserProvider extends ChangeNotifier {
       }
       // notifyListeners();
     });
+  }
+
+  bool isUserInvitedToLobby(Lobby lobby) {
+    bool isInvited = false;
+    for (final invite in invites) {
+      if (invite.lobbyId == lobby.lobbyId) {
+        isInvited = true;
+      }
+    }
+    return isInvited;
   }
 
   @override

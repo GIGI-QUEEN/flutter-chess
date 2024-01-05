@@ -32,7 +32,7 @@ class InvitesView extends StatelessWidget {
                                     title: Text(userModel
                                         .invites[index].lobbyIOwnerName),
                                     subtitle: Text(
-                                        "invites you to ${userModel.invites[index].lobbyName}"),
+                                        "invites you to: ${userModel.invites[index].lobbyName}"),
                                     onTap: () {
                                       final lobby = pickLobby(
                                           lobbiesModel.lobbies,

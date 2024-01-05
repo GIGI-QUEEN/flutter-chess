@@ -15,6 +15,8 @@ const BoxDecoration mainContainerDecoration = BoxDecoration(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-      Color.fromRGBO(84, 74, 125, 1),
-      Color(0Xffffd452),
+      mainPurple,
+      mainYellow,
     ]));
+const mainYellow = Color(0Xffffd452);
+const mainPurple = Color.fromRGBO(84, 74, 125, 1);

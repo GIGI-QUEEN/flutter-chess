@@ -106,15 +106,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-
-/* 
-
-{
-  "rules": {
-    ".read": "now < 1702159200000",  // 2023-12-10
-    ".write": "now < 1702159200000",  // 2023-12-10
-  }
-}
- */
