@@ -1,12 +1,15 @@
 # chess
 
 Chess is the app that allows users to create public/private lobbies and play chess with each other.
+
 It's possible to invite users to lobbies.
+
 Only invited users have access to private lobbies.
 
 # Audit helper
 
 For the sake of simplicity the whole audit process was recorded on video
+
 Here's the link: https://www.youtube.com/watch?v=d9wRt4dx4Is
 
 ## Project Description and Audit
