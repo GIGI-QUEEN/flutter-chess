@@ -1,16 +1,31 @@
-# client
+# chess
 
-A new Flutter project.
+Chess is the app that allows users to create public/private lobbies and play chess with each other.
+It's possible to invite users to lobbies.
+Only invited users have access to private lobbies.
 
-## Getting Started
+# Audit helper
 
-This project is a starting point for a Flutter application.
+For the sake of simplicity the whole audit process was recorded on video
+Here's the link: https://www.youtube.com/watch?v=d9wRt4dx4Is
 
-A few resources to get you started if this is your first Flutter project:
+## Project Description and Audit
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Full project description: https://github.com/01-edu/public/tree/master/subjects/mobile-dev/chess
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Audit questions: https://github.com/01-edu/public/tree/master/subjects/mobile-dev/chess/audit
+
+# Technologies
+
+- Real time database (Firebase)
+- Chess engine - https://pub.dev/packages/chess
+- Chess board - https://pub.dev/packages/simple_chess_board
+- State management with Provider pattern
+
+# Run project locally (If you're that crazy)
+
+- Proceed to the official guide for flutter "Get started" https://docs.flutter.dev/get-started/install
+- Clone this repo to your machine
+- Run **flutter pub get**
+- Run **main.dart** file with debugger (ctrl+F5 in VSCode)
+- Enjoy the app (or don't enjoy)
