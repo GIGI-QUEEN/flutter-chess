@@ -1,34 +1,35 @@
-# chess
+# flutter-chess
 
-Chess is the app that allows users to create public/private lobbies and play chess with each other.
+Chess is the app that allows users to create public/private lobbies and play chess with each other. As this is a school project, I've included the video of the audit process that showcases main features of the app: https://www.youtube.com/watch?v=d9wRt4dx4Is
 
-It's possible to invite users to lobbies.
+## Features
 
-Only invited users have access to private lobbies.
-
-# Audit helper
-
-For the sake of simplicity the whole audit process was recorded on video
-
-Here's the link: https://www.youtube.com/watch?v=d9wRt4dx4Is
-
-## Project Description and Audit
-
-- Full project description: https://github.com/01-edu/public/tree/master/subjects/mobile-dev/chess
-
-- Audit questions: https://github.com/01-edu/public/tree/master/subjects/mobile-dev/chess/audit
+- Invite users to lobbies
+- Create private and public lobbies
+- Join public games
+- Only invited user can join private lobby
 
 # Technologies
 
-- Real time database (Firebase)
+- Real time database - [Firebase](https://firebase.google.com/)
 - Chess engine - https://pub.dev/packages/chess
 - Chess board - https://pub.dev/packages/simple_chess_board
 - State management with Provider pattern
 
-# Run project locally (If you're that crazy)
+# Run project locally
 
 - Proceed to the official guide for flutter "Get started" https://docs.flutter.dev/get-started/install
 - Clone this repo to your machine
 - Run **flutter pub get**
 - Run **main.dart** file with debugger (ctrl+F5 in VSCode)
 - Enjoy the app (or don't enjoy)
+
+# Screenshots
+
+<div style="display:flex">
+<img src="./screenshots/lobbies_list.png" style="width:250px;height:auto;">
+<img src="./screenshots/lobby_owner_view.png" style="width:250px;height:auto;">
+<img src="./screenshots/lobby_guest_view.png" style="width:250px;height:auto;">
+<img src="./screenshots/board_view.png" style="width:250px;height:auto;">
+<img src="./screenshots/create_lobby_view.png" style="width:250px;height:auto;">
+</div>
